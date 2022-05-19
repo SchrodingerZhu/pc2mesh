@@ -100,4 +100,7 @@ namespace offload {
     };
 
     void estimate_normals(size_t count, const Matrix3D * covariances, Vector3D* normals);
+    Vector3D estimate_normal_from_cov(
+            const Matrix3D & cov
+    );
 }

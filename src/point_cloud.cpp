@@ -53,12 +53,13 @@ namespace pc2mesh::geometry {
         auto norm_end = std::chrono::high_resolution_clock::now();
         std::cout << "norm calculated in " << std::chrono::duration_cast<std::chrono::milliseconds>(norm_end - norm_start).count() << "ms" << std::endl;
 
-        std::vector<Eigen::Vector3d> result(covariances.size());
-        std::transform(normals.begin(), normals.end(), result.begin(), [](const offload::Vector3D &data) {
-            return Eigen::Vector3d {
-                data(0), data(1), data(2)
-            };
-        });
+        std::vector<Eigen::Vector3d> result {};
+        for (size_t i = 0; i < covariances.size(); ++i) {
+            auto data = normals[i];
+            result.emplace_back(
+                        data(0), data(1), data(2)
+            );
+        }
         return result;
     }
 }

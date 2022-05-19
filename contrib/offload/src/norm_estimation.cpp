@@ -1,5 +1,6 @@
 #include <offload/norm_estimation.hpp>
 #include <cmath>
+#include <iostream>
 
 namespace offload {
     namespace detail {
@@ -34,8 +35,8 @@ namespace offload {
         }
 
         __attribute__((always_inline)) static inline Vector3D compute_eigenvector1(const Matrix3D &A,
-                                                    const Vector3D &evec0,
-                                                    double eval1) {
+                                                                                   const Vector3D &evec0,
+                                                                                   double eval1) {
             Vector3D U{}, V{};
             if (std::abs(evec0(0)) > std::abs(evec0(1))) {
                 double inv_length =
@@ -108,10 +109,9 @@ namespace offload {
 
             Matrix3D A = covariance;
             double max_coeff = A.max_element();
-            if (max_coeff == 0) {
+            if (max_coeff <= 0) {
                 return Vector3D{};
             }
-            A /= max_coeff;
 
             double norm = A(0, 1) * A(0, 1) + A(0, 2) * A(0, 2) + A(1, 2) * A(1, 2);
             if (norm > 0) {
@@ -150,11 +150,9 @@ namespace offload {
                 if (half_det >= 0) {
                     evec2 = compute_eigenvector0(A, eval(2));
                     if (eval(2) < eval(0) && eval(2) < eval(1)) {
-                        A *= max_coeff;
                         return evec2;
                     }
                     evec1 = compute_eigenvector1(A, evec2, eval(1));
-                    A *= max_coeff;
                     if (eval(1) < eval(0) && eval(1) < eval(2)) {
                         return evec1;
                     }
@@ -163,11 +161,9 @@ namespace offload {
                 } else {
                     evec0 = compute_eigenvector0(A, eval(0));
                     if (eval(0) < eval(1) && eval(0) < eval(2)) {
-                        A *= max_coeff;
                         return evec0;
                     }
                     evec1 = compute_eigenvector1(A, evec0, eval(1));
-                    A *= max_coeff;
                     if (eval(1) < eval(0) && eval(1) < eval(2)) {
                         return evec1;
                     }
@@ -175,7 +171,6 @@ namespace offload {
                     return evec2;
                 }
             } else {
-                A *= max_coeff;
                 if (A(0, 0) < A(1, 1) && A(0, 0) < A(2, 2)) {
                     return Vector3D{1, 0, 0};
                 } else if (A(1, 1) < A(0, 0) && A(1, 1) < A(2, 2)) {
@@ -187,12 +182,18 @@ namespace offload {
         }
     }
 
-    void estimate_normals(size_t count, const Matrix3D * covariances, Vector3D* normals) {
+    void estimate_normals(size_t count, const Matrix3D *covariances, Vector3D *normals) {
 #pragma omp target map(to: covariances[0:count]) map(from: normals[0:count])
 #pragma omp teams distribute parallel for default(none) shared(count, covariances, normals)
         for (size_t i = 0; i < count; i++) {
             normals[i] = detail::fast_eigen_3x3(covariances[i]);
         }
+    }
+
+    Vector3D estimate_normal_from_cov(
+            const Matrix3D &cov
+    ) {
+        return detail::fast_eigen_3x3(cov);
     }
 
 }
