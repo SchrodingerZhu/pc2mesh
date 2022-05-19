@@ -4,7 +4,7 @@
 
 int main() {
     std::vector<Eigen::Vector3d> data {};
-    for (int i = 0; i < 10000; ++i) {
+    for (int i = 0; i < 1000000; ++i) {
         data.emplace_back(rand(), rand(), rand());
         data.back().normalize();
     }

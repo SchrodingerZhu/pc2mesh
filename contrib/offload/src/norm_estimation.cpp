@@ -24,7 +24,6 @@ namespace offload {
             if (d2 > dmax) {
                 imax = 2;
             }
-
             if (imax == 0) {
                 return r0xr1 / std::sqrt(d0);
             } else if (imax == 1) {
@@ -109,9 +108,11 @@ namespace offload {
 
             Matrix3D A = covariance;
             double max_coeff = A.max_element();
-            if (max_coeff <= 0) {
+            if (max_coeff <= std::numeric_limits<double>::denorm_min()) {
                 return Vector3D{};
             }
+
+            A /= max_coeff;
 
             double norm = A(0, 1) * A(0, 1) + A(0, 2) * A(0, 2) + A(1, 2) * A(1, 2);
             if (norm > 0) {
@@ -138,6 +139,11 @@ namespace offload {
                 half_det = std::min(std::max(half_det, -1.0), 1.0);
 
                 double angle = std::acos(half_det) / (double) 3;
+
+                if (!std::isnormal(angle)) {
+                    angle = half_det > 0 ? 0 : 3.141592653589793;
+                }
+
                 double const two_thirds_pi = 2.09439510239319549;
                 double beta2 = std::cos(angle) * 2;
                 double beta0 = std::cos(angle + two_thirds_pi) * 2;
