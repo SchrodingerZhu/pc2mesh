@@ -3,7 +3,7 @@
 
 namespace offload {
     namespace detail {
-        static inline Vector3D compute_eigenvector0(const Matrix3D &A, double eval0) {
+        __attribute__((always_inline)) static inline Vector3D compute_eigenvector0(const Matrix3D &A, double eval0) {
             Vector3D row0{A(0, 0) - eval0, A(0, 1), A(0, 2)};
             Vector3D row1{A(0, 1), A(1, 1) - eval0, A(1, 2)};
             Vector3D row2{A(0, 2), A(1, 2), A(2, 2) - eval0};
@@ -33,7 +33,7 @@ namespace offload {
             }
         }
 
-        static inline Vector3D compute_eigenvector1(const Matrix3D &A,
+        __attribute__((always_inline)) static inline Vector3D compute_eigenvector1(const Matrix3D &A,
                                                     const Vector3D &evec0,
                                                     double eval1) {
             Vector3D U{}, V{};
@@ -99,7 +99,7 @@ namespace offload {
             }
         }
 
-        static inline Vector3D fast_eigen_3x3(const Matrix3D &covariance) {
+        __attribute__((always_inline)) static inline Vector3D fast_eigen_3x3(const Matrix3D &covariance) {
             // Previous version based on:
             // https://en.wikipedia.org/wiki/Eigenvalue_algorithm#3.C3.973_matrices
             // Current version based on

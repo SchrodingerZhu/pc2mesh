@@ -27,6 +27,8 @@ target_compile_options(pc2mesh-offload PRIVATE -Ofast -ffast-math -fopenmp -mavx
 if (PC2MESH_ENABLE_AMD_OFFLOAD)
     target_compile_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -fopenmp=libomp -stdlib=libstdc++)
     target_link_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -fopenmp=libomp -lm -stdlib=libstdc++)
+else()
+    target_compile_options(pc2mesh-offload PRIVATE -march=x86-64-v3)
 endif()
 
 

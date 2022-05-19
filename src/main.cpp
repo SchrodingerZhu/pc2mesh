@@ -3,13 +3,16 @@
 #include <pc2mesh/geometry/point_cloud.hpp>
 
 int main() {
-    std::vector<Eigen::Vector3d> data {
-            {0, 0, 0},
-            {0, -2, 0},
-            {2, 0, 0},
-    };
-    for (int i = 0; i < 10'000'000; ++i) {
+    std::vector<Eigen::Vector3d> data {};
+    for (int i = 0; i < 1000000; ++i) {
         data.emplace_back(rand(), rand(), rand());
+        data.back().normalize();
     }
     auto normals = pc2mesh::geometry::estimate_normals(data);
+    double sum {};
+    for (const auto & i : normals) {
+        sum += i.norm();
+    }
+    std::cout << sum << std::endl;
+
 }

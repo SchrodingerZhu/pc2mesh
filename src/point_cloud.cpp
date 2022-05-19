@@ -2,6 +2,7 @@
 #include <pc2mesh/geometry/kdtree_flann.hpp>
 #include <pc2mesh/geometry/point_cloud.hpp>
 #include <offload/norm_estimation.hpp>
+#include <chrono>
 #include <nanoflann.hpp>
 #include <iostream>
 namespace pc2mesh::geometry {
