@@ -141,7 +141,7 @@ namespace offload {
                 double angle = std::acos(half_det) / (double) 3;
 
                 if (!std::isnormal(angle)) {
-                    angle = half_det > 0 ? 0 : 3.141592653589793;
+                    angle = half_det > 0 ? 0 : 3.141592653589793 / 3;
                 }
 
                 double const two_thirds_pi = 2.09439510239319549;
