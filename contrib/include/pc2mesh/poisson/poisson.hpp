@@ -1,0 +1,7 @@
+#include "../Open3D-PoissonRecon/Src/FEMTree.h"
+#include "../Open3D-PoissonRecon/Src/PreProcessor.h"
+#include "../Open3D-PoissonRecon/Src/MyMiscellany.h"
+#include "../Open3D-PoissonRecon/Src/CmdLineParser.h"
+#include "../Open3D-PoissonRecon/Src/FEMTree.h"
+#include "../Open3D-PoissonRecon/Src/PPolynomial.h"
+#include "../Open3D-PoissonRecon/Src/PointStreamData.h"
