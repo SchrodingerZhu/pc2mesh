@@ -1,6 +1,6 @@
 file(GLOB PC2MESH_CONTRIB_SRC_FILES src/*.cpp)
 add_library(pc2mesh-contrib STATIC ${PC2MESH_CONTRIB_SRC_FILES})
-target_compile_options(pc2mesh-contrib PUBLIC -fopenmp)
+target_compile_options(pc2mesh-contrib PUBLIC -fopenmp -march=native)
 target_link_options(pc2mesh-contrib PUBLIC -fopenmp)
 
 add_library(rply STATIC rply/rplyfile.h rply/rply.h rply/rply.c)
@@ -22,9 +22,10 @@ option(PC2MESH_ENABLE_FULL_OPTIMIZATION OFF)
 file(GLOB PC2MESH_OFFLOAD_SRC_FILES offload/src/*.cpp)
 add_library(pc2mesh-offload SHARED ${PC2MESH_OFFLOAD_SRC_FILES})
 target_include_directories(pc2mesh-offload PUBLIC offload/include)
+target_compile_options(pc2mesh-offload PRIVATE -Ofast -ffast-math -fopenmp -mavx2 -mfma -msse4 -msse3)
 
 if (PC2MESH_ENABLE_AMD_OFFLOAD)
-    target_compile_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -Ofast -ffast-math -fopenmp=libomp -stdlib=libstdc++)
+    target_compile_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -fopenmp=libomp -stdlib=libstdc++)
     target_link_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -fopenmp=libomp -lm -stdlib=libstdc++)
 endif()
 

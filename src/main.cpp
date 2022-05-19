@@ -8,7 +8,7 @@ int main() {
             {0, -2, 0},
             {2, 0, 0},
     };
-    for (int i = 0; i < 1'000'000; ++i) {
+    for (int i = 0; i < 10'000'000; ++i) {
         data.emplace_back(rand(), rand(), rand());
     }
     auto normals = pc2mesh::geometry::estimate_normals(data);
