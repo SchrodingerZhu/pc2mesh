@@ -1,6 +1,6 @@
 file(GLOB PC2MESH_CONTRIB_SRC_FILES src/*.cpp)
 add_library(pc2mesh-contrib STATIC ${PC2MESH_CONTRIB_SRC_FILES})
-target_compile_options(pc2mesh-contrib PUBLIC -fopenmp -march=native)
+target_compile_options(pc2mesh-contrib PUBLIC -fopenmp -march=native -Ofast -ffast-math)
 target_link_options(pc2mesh-contrib PUBLIC -fopenmp)
 
 add_library(rply STATIC rply/rplyfile.h rply/rply.h rply/rply.c)
