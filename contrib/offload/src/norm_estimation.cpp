@@ -112,8 +112,6 @@ namespace offload {
                 return Vector3D{};
             }
 
-            A /= max_coeff;
-
             double norm = A(0, 1) * A(0, 1) + A(0, 2) * A(0, 2) + A(1, 2) * A(1, 2);
             if (norm > 0) {
                 Vector3D eval{};
