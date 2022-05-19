@@ -190,7 +190,7 @@ namespace offload {
     void estimate_normals(size_t count, const Matrix3D * covariances, Vector3D* normals) {
 #pragma omp target map(to: covariances[0:count]) map(from: normals[0:count])
 #pragma omp teams distribute parallel for default(none) shared(count, covariances, normals)
-        for (int i = 0; i < count; i++) {
+        for (size_t i = 0; i < count; i++) {
             normals[i] = detail::fast_eigen_3x3(covariances[i]);
         }
     }

@@ -24,7 +24,7 @@ add_library(pc2mesh-offload SHARED ${PC2MESH_OFFLOAD_SRC_FILES})
 target_include_directories(pc2mesh-offload PUBLIC offload/include)
 
 if (PC2MESH_ENABLE_AMD_OFFLOAD)
-    target_compile_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -fopenmp=libomp -stdlib=libstdc++)
+    target_compile_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -Ofast -ffast-math -fopenmp=libomp -stdlib=libstdc++)
     target_link_options(pc2mesh-offload PRIVATE -fopenmp-targets=amdgcn -fopenmp=libomp -lm -stdlib=libstdc++)
 endif()
 
