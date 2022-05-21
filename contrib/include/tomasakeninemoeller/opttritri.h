@@ -2,8 +2,8 @@
 
 namespace tomasakeninemoeller {
     __attribute__((always_inline)) static inline int
-    coplanar_tri_tri(double N[3], double V0[3], double V1[3], double V2[3],
-                     double U0[3], double U1[3], double U2[3]) {
+    coplanar_tri_tri(const double N[3], const double V0[3], const double V1[3], const double V2[3],
+                     const double U0[3], const double U1[3], const double U2[3]) {
         double A[3];
         short i0, i1;
 
@@ -173,8 +173,13 @@ namespace tomasakeninemoeller {
         return 0;
     }
 
-    __attribute__((always_inline)) static inline int NoDivTriTriIsect(double V0[3], double V1[3], double V2[3],
-                                                                      double U0[3], double U1[3], double U2[3]) {
+    __attribute__((always_inline)) static inline int NoDivTriTriIsect(
+            const double V0[3],
+            const double V1[3],
+            const double V2[3],
+            const double U0[3],
+            const double U1[3],
+            const double U2[3]) {
         double E1[3], E2[3];
         double N1[3], N2[3], d1, d2;
         double du0, du1, du2, dv0, dv1, dv2;
