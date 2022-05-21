@@ -2,6 +2,7 @@
 #include <chrono>
 #include <pc2mesh/geometry/point_cloud.hpp>
 #include <pc2mesh/geometry/intersection.hpp>
+#include <pc2mesh/geometry/ball_pivoting.hpp>
 #include <pc2mesh/utilities/timer.hpp>
 
 int main() {
