@@ -35,4 +35,9 @@ namespace pc2mesh::utilities {
         covariance(2, 1) = covariance(1, 2);
         return covariance;
     }
+
+    template <typename H>
+    __attribute__((always_inline)) inline H AbslHashValue(H h, const Eigen::Vector3d& m) {
+        return H::combine_contiguous(h, m.data(), m.size());
+    }
 }
