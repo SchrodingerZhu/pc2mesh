@@ -1,3 +1,4 @@
+#pragma once
 #include <Eigen/Core>
 #include <tomasakeninemoeller/tribox3.h>
 #include <tomasakeninemoeller/opttritri.h>

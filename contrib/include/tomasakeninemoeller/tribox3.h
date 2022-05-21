@@ -1,3 +1,4 @@
+#pragma once
 namespace tomasakeninemoeller {
     __attribute__((always_inline)) static inline int planeBoxOverlap(const double normal[3], const double vert[3], const double maxbox[3]) {
         int q;

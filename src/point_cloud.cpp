@@ -192,15 +192,12 @@ namespace pc2mesh::geometry {
     }
 
     std::vector<Eigen::Matrix3d> estimate_pointwise_covariances(
+            const KDTreeFlann& kdtree,
             const std::vector<Eigen::Vector3d> &points,
             const KDTreeSearchParam &search_param /* = KDTreeSearchParamKNN()*/) {
         std::vector<Eigen::Matrix3d> covariances;
         covariances.resize(points.size());
 
-        KDTreeFlann kdtree;
-        kdtree.SetRawData(Eigen::Map<const Eigen::MatrixXd>(
-                (const double *) points.data(),
-                3, static_cast<Eigen::Index>(points.size())));
 #pragma omp parallel for schedule(static) default(none) shared(kdtree, points, search_param, covariances)
         for (size_t i = 0; i < points.size(); i++) {
             std::vector<int> indices;
@@ -223,5 +220,12 @@ namespace pc2mesh::geometry {
             normals[i] = detail::fast_eigen_3x3(covariances[i]);
         }
         return normals;
+    }
+
+    PointCloud::PointCloud(std::vector<Eigen::Vector3d> points) {
+        this->points = std::move(points);
+        kdtree = std::make_shared<KDTreeFlann>(this->points);
+        covariances = estimate_pointwise_covariances(*this->kdtree, this->points);
+        normals = estimate_normals(this->covariances);
     }
 }
