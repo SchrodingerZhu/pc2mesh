@@ -631,7 +631,7 @@ namespace pc2mesh {
                                     width, scale, linear_fit, FEMSigs());
             ThreadPool::Terminate();
 
-            auto kth = static_cast<size_t>(static_cast<double>(densities.size()) * 0.2);
+            auto kth = static_cast<size_t>(static_cast<double>(densities.size()) * 0.01);
 
             if (kth > 0) {
                 std::vector<double> densities_copy = densities;

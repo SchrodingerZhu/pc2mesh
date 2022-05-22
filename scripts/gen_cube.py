@@ -54,8 +54,8 @@ for o, targets in [(origin1, line_target1), (origin2, line_target2)]:
             t[1][2] - o[2],
         ])
 
-        for x in numpy.arange(0, 1.0, 0.01):
-            for y in numpy.arange(0, 1.0, 0.01):
+        for x in numpy.arange(0, 1.005, 0.01):
+            for y in numpy.arange(0, 1.005, 0.01):
                 p = p0 + x * d0 + y * d1
                 X.append(p)
                 CNT = CNT + 1
