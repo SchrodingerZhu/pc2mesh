@@ -3278,7 +3278,6 @@ double FEMTree< Dim , Real >::_dot( UIntPack< FEMSigs1 ... > , UIntPack< FEMSigs
 					_SetParentOverlapBounds( UIntPack< Degrees1 ... >() , UIntPack< Degrees2 ... >() , node , start , end );
 
 #ifdef __clang__
-#pragma message ( "[WARNING] You've got me clang" )
 					std::function< void (int,int) > updateFunction = [](int,int){};
 #endif // __clang__
 

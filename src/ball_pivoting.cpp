@@ -1,6 +1,6 @@
 #include <deque>
 #include <list>
-
+#include <iostream>
 #include <pc2mesh/geometry/intersection.hpp>
 #include <pc2mesh/geometry/kdtree_flann.hpp>
 #include <pc2mesh/geometry/triangle_mesh.hpp>
@@ -553,6 +553,7 @@ namespace pc2mesh::geometry {
             current_mesh.indices.clear();
 
             for (double radius: radii) {
+                std::cout << "pivoting with radius: " << radius << std::endl;
                 // update radius => update border edges
                 for (auto it = border_edges_list.begin(); it != border_edges_list.end();) {
                     BallPivotingEdgePtr edge = *it;
