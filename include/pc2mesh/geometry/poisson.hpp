@@ -4,7 +4,7 @@
 #include <pc2mesh/geometry/triangle_mesh.hpp>
 #include <utility>
 namespace pc2mesh::geometry {
-    std::pair<TriangleMesh, std::vector<double>> create_triangle_mesh_possion(
+    TriangleMesh create_triangle_mesh_possion(
             PointCloud &pcd,
             size_t depth = 8,
             float width = 0.0f,

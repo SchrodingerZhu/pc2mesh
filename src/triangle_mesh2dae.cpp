@@ -168,8 +168,9 @@ namespace pc2mesh::geometry {
                 << "\">"
                 << std::endl;
 
-        for (const auto & point: point_list){
-                outfile << "\t" << point[0] << " " <<  std::to_string(point[1]) << " " << std::to_string(point[2]) << std::endl;
+        for (size_t i = index_shift; i < point_list.size(); ++i){
+            const auto & point = point_list[i];
+            outfile << "\t" << point[0] << " " <<  std::to_string(point[1]) << " " << std::to_string(point[2]) << std::endl;
         }
 
 
@@ -187,7 +188,8 @@ namespace pc2mesh::geometry {
                   "        </source>\n"
                   "        <source id=\"Cube-mesh-normals\">\n"
                   "          <float_array id=\"Cube-mesh-normals-array\" count=\"" << normal_list.size() <<"\">";
-        for (const auto & norm: normal_list){
+        for (size_t i = index_shift; i < normal_list.size(); ++i){
+            const auto & norm = normal_list[i];
             outfile << "\t" << norm[0] << " " <<  norm[1] << " " << norm[2] << std::endl;
         }
 
@@ -216,9 +218,9 @@ namespace pc2mesh::geometry {
         outfile << "</vcount>\n";
         outfile << "          <p>";
 
-        size_t counter = index_shift;
+        size_t counter = 0;
         for (const auto & index: tri_indices_list){
-            outfile << index_shift + index[0] <<" "<< counter << " "<< index_shift + index[1] << " " <<counter  <<" " << index_shift + index[2] << " "     <<counter << std::endl;
+            outfile << index[0] <<" "<< counter << " "<< index[1] << " " <<counter  <<" " << index[2] << " "     <<counter << std::endl;
             counter ++;
         }
 

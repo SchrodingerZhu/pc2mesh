@@ -25,6 +25,6 @@ int main(int argc, char** argv) {
         pc2mesh::geometry::tri2dae(cloud, trimesh);
     } else {
         auto trimesh = pc2mesh::geometry::create_triangle_mesh_possion(cloud, 8, 0, 1.1, true);
-        pc2mesh::geometry::tri2dae(cloud, std::get<0>(trimesh), data.size());
+        pc2mesh::geometry::tri2dae(cloud, trimesh, data.size());
     }
 }

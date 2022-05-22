@@ -9,6 +9,7 @@
 
 #include <pc2mesh/geometry/point_cloud.hpp>
 #include <pc2mesh/geometry/triangle_mesh.hpp>
+#include <algorithm>
 
 namespace pc2mesh {
     namespace geometry {
@@ -604,13 +605,14 @@ namespace pc2mesh {
 
         }  // namespace poisson
 
-        std::pair<TriangleMesh, std::vector<double>>
+        TriangleMesh
         create_triangle_mesh_possion(PointCloud& pcd,
                                                   size_t depth,
                                                   float width,
                                                   float scale,
                                                   bool linear_fit,
                                                   int n_threads) {
+            auto original_size = pcd.points.size();
             static const BoundaryType BType = poisson::DEFAULT_FEM_BOUNDARY;
             typedef IsotropicUIntPack<
                     poisson::DIMENSION,
@@ -627,10 +629,24 @@ namespace pc2mesh {
             std::vector<double> densities;
             poisson::Execute<float>(pcd, mesh, densities, static_cast<int>(depth),
                                     width, scale, linear_fit, FEMSigs());
-
             ThreadPool::Terminate();
 
-            return {std::move(mesh), densities};
+            auto kth = static_cast<size_t>(static_cast<double>(densities.size()) * 0.2);
+
+            if (kth > 0) {
+                std::vector<double> densities_copy = densities;
+                std::nth_element(densities_copy.begin(), densities_copy.begin() + kth, densities_copy.end());
+                auto filter = *(densities_copy.begin() + kth);
+                std::vector<Eigen::Vector3i> indices;
+                for (auto & index : mesh.indices) {
+                    if (densities[index[0]] > filter && densities[index[1]] && densities[index[2]] ) {
+                        indices.push_back(index);
+                    }
+                }
+                mesh.indices = indices;
+            }
+
+            return mesh;
         }
 
     }  // namespace geometry

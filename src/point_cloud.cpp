@@ -225,7 +225,7 @@ namespace pc2mesh::geometry {
     PointCloud::PointCloud(std::vector<Eigen::Vector3d> points) {
         this->points = std::move(points);
         kdtree = new KDTreeFlann(this->points);
-        covariances = estimate_pointwise_covariances(*this->kdtree, this->points);
+        covariances = estimate_pointwise_covariances(*this->kdtree, this->points, KDTreeSearchParamHybrid(0.1, 30));
         normals = estimate_normals(this->covariances);
     }
 

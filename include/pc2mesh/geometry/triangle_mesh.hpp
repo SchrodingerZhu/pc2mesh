@@ -2,7 +2,6 @@
 #include <Eigen/Dense>
 #include <pc2mesh/geometry/point_cloud.hpp>
 
-
 namespace pc2mesh {
     namespace geometry {
         struct TriangleMesh {
