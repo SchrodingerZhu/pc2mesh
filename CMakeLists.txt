@@ -4,7 +4,7 @@ project(pc2mesh)
 set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB PC2MESH_SRC_FILES src/*.cpp)
-add_executable(pc2mesh ${PC2MESH_SRC_FILES})
+add_executable(pc2mesh ${PC2MESH_SRC_FILES} src/triangle_mesh2dae.cpp include/pc2mesh/geometry/triangle_mesh2dae.hpp)
 add_subdirectory(contrib)
 
 target_link_libraries(pc2mesh PRIVATE Pc2Mesh::Contrib)
