@@ -2,10 +2,10 @@
 
 #include <vector>
 #include <pc2mesh/geometry/triangle_mesh.hpp>
-#include <tuple>
+#include <utility>
 namespace pc2mesh::geometry {
-    std::tuple<TriangleMesh, std::vector<double>> create_triangle_mesh_possion(
-            const PointCloud &pcd,
+    std::pair<TriangleMesh, std::vector<double>> create_triangle_mesh_possion(
+            PointCloud &pcd,
             size_t depth = 8,
             float width = 0.0f,
             float scale = 1.1f,

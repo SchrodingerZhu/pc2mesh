@@ -5,6 +5,6 @@
 
 namespace pc2mesh::geometry {
     TriangleMesh create_triangle_mesh_ball_pivoting(
-            const PointCloud &pcd, const std::vector<double> &radii);
+            PointCloud &pcd, const std::vector<double> &radii);
 
 }  // namespace open3d

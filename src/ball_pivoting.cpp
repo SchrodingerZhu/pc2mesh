@@ -140,7 +140,7 @@ namespace pc2mesh::geometry {
 
     class BallPivoting {
     public:
-        BallPivoting(const PointCloud &pcd)
+        BallPivoting(PointCloud &pcd)
                 : pcd(pcd), current_mesh(pcd) {
             for (size_t vidx = 0; vidx < pcd.points.size(); ++vidx) {
                 vertices.emplace_back(new BallPivotingVertex(static_cast<int>(vidx),
@@ -608,7 +608,7 @@ namespace pc2mesh::geometry {
     };
 
     TriangleMesh create_triangle_mesh_ball_pivoting(
-            const PointCloud &pcd, const std::vector<double> &radii) {
+            PointCloud &pcd, const std::vector<double> &radii) {
         BallPivoting bp(pcd);
         bp.Run(radii);
         return bp.ReleaseTriMesh();
