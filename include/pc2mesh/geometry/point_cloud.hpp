@@ -14,8 +14,9 @@ namespace pc2mesh::geometry {
 
     struct PointCloud {
         explicit PointCloud(std::vector<Eigen::Vector3d> points);
+        ~PointCloud();
 
-        std::shared_ptr<class KDTreeFlann> kdtree;
+        class KDTreeFlann* kdtree;
         std::vector<Eigen::Vector3d> points;
         std::vector<Eigen::Matrix3d> covariances;
         std::vector<Eigen::Vector3d> normals;
