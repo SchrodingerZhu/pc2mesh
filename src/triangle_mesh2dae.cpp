@@ -9,7 +9,7 @@
 
 namespace pc2mesh::geometry {
 
-    void tri2dae (const PointCloud &pcd, const TriangleMesh &trimesh){
+    void tri2dae (const PointCloud &pcd, const TriangleMesh &trimesh, size_t index_shift){
 
         const auto & point_list = pcd.points;
         const auto & tri_indices_list = trimesh.indices;
@@ -216,9 +216,9 @@ namespace pc2mesh::geometry {
         outfile << "</vcount>\n";
         outfile << "          <p>";
 
-        int counter = 0;
+        size_t counter = index_shift;
         for (const auto & index: tri_indices_list){
-            outfile << index[0]<<" "<< counter << " "<< index[1] << " " <<counter  <<" " << index[2] << " "     <<counter << std::endl;
+            outfile << index_shift + index[0] <<" "<< counter << " "<< index_shift + index[1] << " " <<counter  <<" " << index_shift + index[2] << " "     <<counter << std::endl;
             counter ++;
         }
 
