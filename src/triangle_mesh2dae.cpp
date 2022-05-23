@@ -188,7 +188,7 @@ namespace pc2mesh::geometry {
                   "        </source>\n"
                   "        <source id=\"Cube-mesh-normals\">\n"
                   "          <float_array id=\"Cube-mesh-normals-array\" count=\"" << normal_list.size() <<"\">";
-        for (size_t i = index_shift; i < normal_list.size(); ++i){
+        for (size_t i = 0; i < normal_list.size(); ++i){
             const auto & norm = normal_list[i];
             outfile << "\t" << norm[0] << " " <<  norm[1] << " " << norm[2] << std::endl;
         }

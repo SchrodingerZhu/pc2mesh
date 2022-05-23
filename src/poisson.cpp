@@ -1,3 +1,4 @@
+#include <absl/container/flat_hash_set.h>
 #include <pc2mesh/poisson/poisson.hpp>
 #include <pc2mesh/geometry/poisson.hpp>
 
@@ -633,17 +634,39 @@ namespace pc2mesh {
 
             auto kth = static_cast<size_t>(static_cast<double>(densities.size()) * 0.01);
 
-            if (kth > 0) {
+            {
+                absl::flat_hash_set<std::pair<size_t, size_t>> inserted_order;
                 std::vector<double> densities_copy = densities;
                 std::nth_element(densities_copy.begin(), densities_copy.begin() + kth, densities_copy.end());
                 auto filter = *(densities_copy.begin() + kth);
                 std::vector<Eigen::Vector3i> indices;
+                std::vector<Eigen::Vector3d> normals;
                 for (auto & index : mesh.indices) {
                     if (densities[index[0]] > filter && densities[index[1]] && densities[index[2]] ) {
-                        indices.push_back(index);
+                        auto x = mesh.pcd.points[index[0] + original_size];
+                        auto y = mesh.pcd.points[index[1] + original_size];
+                        auto z = mesh.pcd.points[index[2] + original_size];
+                        auto n = (y - x).cross(z - x);
+
+                        std::pair<size_t, size_t> o1 = {index[0], index[1]};
+                        std::pair<size_t, size_t> o2 = {index[1], index[2]};
+                        std::pair<size_t, size_t> o3 = {index[2], index[0]};
+
+                        std::pair<size_t, size_t> o4 = {index[2], index[1]};
+                        std::pair<size_t, size_t> o5 = {index[1], index[0]};
+                        std::pair<size_t, size_t> o6 = {index[0], index[2]};
+
+                        if (!inserted_order.contains(o1) && !inserted_order.contains(o2) && !inserted_order.contains(o3)) {
+                            indices.push_back(index);
+                            normals.push_back(n.normalized());
+                        } else if (!inserted_order.contains(o4) && !inserted_order.contains(o5) && !inserted_order.contains(o6))  {
+                            indices.emplace_back(index[2], index[1], index[0]);
+                            normals.push_back(n.normalized());
+                        }
                     }
                 }
                 mesh.indices = indices;
+                mesh.triangle_normals = normals;
             }
 
             return mesh;

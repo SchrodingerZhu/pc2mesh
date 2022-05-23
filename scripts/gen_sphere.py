@@ -13,8 +13,8 @@ from math import pi, cos, sin
 X = []
 CNT = 0
 
-for a in npy.arange(-0.5 * pi, 0.5 * pi, 0.01):
-    for b in npy.arange(0, 2 * pi, 0.01):
+for a in npy.arange(-0.5 * pi, 0.5 * pi, 0.005):
+    for b in npy.arange(0, 2 * pi, 0.005):
         z = sin(a)
         x = cos(a) * cos(b)
         y = cos(a) * sin(b)
