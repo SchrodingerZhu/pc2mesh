@@ -25,13 +25,13 @@ int main() {
                         cli_data.poisson.filter);
         pc2mesh::geometry::tri2dae(cli_data.poisson.output_file, cloud, trimesh, data.size());
     } else {
-        auto data = pc2mesh::utilities::load_ply(cli_data.poisson.input_file);
+        auto data = pc2mesh::utilities::load_ply(cli_data.ball_pivoting.input_file);
         auto cloud = pc2mesh::geometry::PointCloud{data};
         auto trimesh = pc2mesh::geometry::create_triangle_mesh_ball_pivoting(
                 cloud,
                 std::vector(cli_data.ball_pivoting.radii,
                             cli_data.ball_pivoting.radii + cli_data.ball_pivoting.radii_size)
         );
-        pc2mesh::geometry::tri2dae(cli_data.poisson.output_file, cloud, trimesh, data.size());
+        pc2mesh::geometry::tri2dae(cli_data.ball_pivoting.output_file, cloud, trimesh, 0);
     }
 }
