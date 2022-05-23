@@ -13,7 +13,7 @@
 
 namespace pc2mesh::geometry {
 
-    void tri2dae (const PointCloud &pcd, const TriangleMesh &trimesh, size_t index_shift = 0);
+    void tri2dae (const char* output, const PointCloud &pcd, const TriangleMesh &trimesh, size_t index_shift = 0);
 
 
 

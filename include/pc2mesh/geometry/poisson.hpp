@@ -10,6 +10,7 @@ namespace pc2mesh::geometry {
             float width = 0.0f,
             float scale = 1.1f,
             bool linear_fit = false,
-            int n_threads = -1);
+            int n_threads = -1,
+            double filter = 0.00);
 
 }  // namespace open3d

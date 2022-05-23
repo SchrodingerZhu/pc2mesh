@@ -9,7 +9,7 @@
 
 namespace pc2mesh::geometry {
 
-    void tri2dae (const PointCloud &pcd, const TriangleMesh &trimesh, size_t index_shift){
+    void tri2dae (const char * output, const PointCloud &pcd, const TriangleMesh &trimesh, size_t index_shift){
 
         const auto & point_list = pcd.points;
         const auto & tri_indices_list = trimesh.indices;
@@ -18,7 +18,7 @@ namespace pc2mesh::geometry {
 
 
         std::ofstream outfile;
-        outfile.open("test.dae");
+        outfile.open(output);
 
         outfile << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                   "<COLLADA xmlns=\"http://www.collada.org/2005/11/COLLADASchema\" version=\"1.4.1\">\n"

@@ -18,3 +18,6 @@ add_library(Pc2Mesh::Contrib ALIAS pc2mesh-contrib)
 
 find_package(absl REQUIRED)
 target_link_libraries(pc2mesh-contrib PUBLIC absl::flat_hash_set absl::hash)
+
+add_subdirectory(cli)
+target_link_libraries(pc2mesh-contrib PUBLIC pc2mesh-cli)
